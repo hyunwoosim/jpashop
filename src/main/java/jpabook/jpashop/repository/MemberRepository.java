@@ -1,7 +1,6 @@
 package jpabook.jpashop.repository;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import java.util.List;
 import jpabook.jpashop.domain.Member;
 import lombok.RequiredArgsConstructor;
