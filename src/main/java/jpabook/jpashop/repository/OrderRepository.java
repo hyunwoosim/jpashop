@@ -33,7 +33,7 @@ public class OrderRepository {
 
     public List<Order> findAll(OrderSearch orderSearch) {
         return em.createQuery("select o from Order o join o.member m" +
-            " where o.status = :stauts" +
+            " where o.status = :status" +
             " and m.name like :name", Order.class)
             .setParameter("status", orderSearch.getOrderStatus())
             .setParameter("name", orderSearch.getMemberName())
@@ -70,9 +70,10 @@ public class OrderRepository {
        return em.createQuery(
             "select o from Order o" +
                 " join fetch o.member m" +
-                " join fetch o.delivery d", Order.class
-        ).getResultList();
+                " join fetch o.delivery d", Order.class)
+           .getResultList();
     }
+
 
     public List<OrderSimpleQueryDto> findOrderDtos() {
        return em.createQuery(
@@ -97,5 +98,15 @@ public class OrderRepository {
             .setMaxResults(100)
             .getResultList();
 
+    }
+
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        return em.createQuery(
+            "select o from Order o" +
+                " join fetch o.member m" +
+                " join fetch o.delivery d", Order.class)
+            .setFirstResult(offset)
+            .setMaxResults(limit)
+            .getResultList();
     }
 }
